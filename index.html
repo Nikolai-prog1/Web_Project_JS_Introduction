@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="https://unpkg.com/@turf/turf@6/turf.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
     <style>
         body {
@@ -38,7 +37,7 @@
             display: block;
         }
     </style>
-    <title>Animal Conflict Map</title>
+    <title>Карта животински конфликти</title>
 </head>
 
 <body>
@@ -47,21 +46,29 @@
         <form id="animalForm">
             <label>Вид животно:
                 <select id="species">
-                    <option>Таралеж</option>
-                    <option>Гларус</option>
+                    <option>Кафява мечка</option>
+                    <option>Сив вълк</option>
+                    <option>Чакал</option>
                     <option>Лисица</option>
-                    <option>Котка</option>
-                    <option>Сова</option>
+                    <option>Европейска дива котка</option>
+                    <option>Рис</option>
+                    <option>Язовец</option>
+                    <option>Златка</option>
+                    <option>Невестулка</option>
+                    <option>Пъстър пор</option>
+                    <option>Степен пор</option>
+                    <option>Видра</option>
+                    <option>Тюлен монах</option>
                 </select>
             </label>
             <button type="submit">➕ Добави наблюдение</button>
         </form>
 
         <div>
-            <button>📏 Зона около последното наблюдение</button>
-            <button>🔍 Покажи само избран вид</button>
-            <button>🔄 Върни всички</button>
-            <button>🔥 Показване на heatmap</button>
+            <button onclick="createBuffer()">📏 Зона около последното наблюдение</button>
+            <button onclick="filterSpecies()">🔍 Покажи само избран вид</button>
+            <button onclick="resetMap()">🔄 Върни всички</button>
+            <button onclick="checkTerritoryConflicts(true)">Intersect (засичане на конфликтни зони)</button>
         </div>
     </div>
     <div class="table-wrapper">
@@ -70,8 +77,8 @@
                 <tr>
                     <th>Вид</th>
                     <th>Идентификатор</th>
-                    <th>Радиус</th>
-                    <th>Статус</th>
+                    <th>Радиус на буфера (ареал на обитание)</th>
+                    <th>Статус в България</th>
                     <th>❌ Изтрий наблюдение</th>
                 </tr>
             </thead>
@@ -81,10 +88,12 @@
 </body>
 
 <script>
-    const map = L.map('map').setView([42.7, 23.3], 12);
+    const map = L.map('map');
+    map.fitBounds([[41.2, 22.3], [44.2, 28.6]]);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
 </script>
+<script src="script.js"></script>
 
 </html>
